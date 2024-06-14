@@ -1,0 +1,16 @@
+{
+  "name": "astro-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "run": "astro dev preferences disable devToolbar --global",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.9.2"
+  }
+}

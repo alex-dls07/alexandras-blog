@@ -1,0 +1,228 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+let open = false
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3" defer></script>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Alexandra's blog page" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		
+		<title>{title}</title>
+	</head>
+	<body>
+		<nav class="nav-bar" x-data="{ open: false }"> 
+			<a href="index.html">
+				<img src="assets/name.png"
+					width="100px"
+					height="100px"
+				/> 
+			</a>
+			<button id="menu-button" x-on:click="open = !open">
+				<img src="assets/hamburger.png"
+					width="50px"
+					height="50px"
+				/>
+			</button>
+		</nav>
+		<div id="drawer" x-show="open" x-transition x-on:click.away="open = false">
+			<a class="menu-link" href="about.html" x-on:click="open = false; console.log('Clicked About Me')"> About Me </a>
+			<a class="menu-link" href="blog.html" x-on:click="open = false"> Blog </a>
+		</div>
+		<slot/>
+		
+		<!-- Footer Section -->
+		<footer class="footer">
+			<h2>Subscribe to my blog</h2>
+			<form id="subscribe-form">
+				<input type="email" placeholder="Enter your email" required />
+				<button type="submit">Subscribe</button>
+			</form>
+		</footer>
+	</body>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const menuButton = document.getElementById('menu-button');
+			const drawer = document.getElementById('drawer');
+			console.log(drawer);
+
+			menuButton.addEventListener('click', function() {
+				drawer.style.width = "200px";
+				console.log(menuButton);
+			});
+
+			// Close drawer when a link is clicked
+			drawer.addEventListener('click', function(event) {
+				if (event.target.tagName === 'A') {
+					drawer.style.width = "0";
+				}
+			});
+
+			// Close drawer when clicking outside of it
+			document.addEventListener('click', function(event) {
+				if (!drawer.contains(event.target) && !menuButton.contains(event.target)) {
+					drawer.style.width = "0";
+				}
+			});
+		});
+	</script>
+</html>
+
+<style is:global>
+/* STYLE SECTIONING TAGS */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #968FFF; 
+	text-align: center;
+	font-family: 'Source Sans Pro', sans-serif;
+	position: relative;
+}
+
+/* STYLE TEXT */
+h1 {
+	color: #00006E;
+	font-family: 'Source Sans Pro', sans-serif;
+	text-align: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+main {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-right: 20%;
+	margin-left: 20%;
+}
+
+p {
+	color: #000009; 
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 4em;
+}
+
+h2 {
+	color: #000009;
+	margin-top: 2em;
+}
+
+#intro {
+	color: #13441b;
+}
+
+.pics {
+  border-radius: 10%;
+  max-height: 250 px;
+  border: 3px solid white;
+  margin-bottom: 3em;
+  margin-top: 2em;
+}
+
+.nav-bar {
+	display: flex; 
+	justify-content: space-between;
+	align-items: center;
+	padding-right: 2em;
+	padding-left: 7em;
+	padding-top: 2em;
+}
+
+#drawer {
+	position: absolute;
+	height: 20vh;
+	width: 0;
+	background-color: #18181F;
+	right: 0;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-bottom-left-radius: 20%;
+	box-shadow: -5px 5px 5px #50517A;
+	transition: all 0.5s ease-in-out;
+	overflow: hidden;
+}
+
+[x-show="open"] {
+	transform: translateX(0);
+}
+.menu-link {
+	text-decoration: none;
+	width: 100%;
+	transition: all 0.4s ease-in;
+	padding: 1em 0;
+	color: white;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 15px;
+}
+
+.menu-link:hover {
+	background-color: #8e8fd2;
+}
+
+body {
+	position: relative;
+	width: 100vw;
+}
+
+#menu-button {
+	background-color: transparent;
+	border: none;
+}
+
+/* Footer Styles */
+.footer {
+	background-color: #7C68CC;
+	color: white;
+	padding: 2em 0;
+	padding-bottom: 2em 0;
+	margin-top: 8em;
+}
+
+.footer h2 {
+	margin-bottom: 0.5em;
+}
+
+.footer form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+.footer input[type="email"] {
+	padding: 1em;
+	font-size: 1em;
+	border-radius: 5px;
+	border: none;
+}
+
+.footer button {
+	padding: 1em 1em;
+	font-size: 1em;
+	color: white;
+	background-color: #00006E;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.footer button:hover {
+	background-color: #8e8fd2;
+}
+</style>
