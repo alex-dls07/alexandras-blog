@@ -23,7 +23,7 @@ let open = false
 	</head>
 	<body>
 		<nav class="nav-bar" x-data="{ open: false }"> 
-			<a href="index.html">
+			<a href="/">
 				<img src="assets/name.png"
 					width="100px"
 					height="100px"
@@ -37,8 +37,8 @@ let open = false
 			</button>
 		</nav>
 		<div id="drawer" x-show="open" x-transition x-on:click.away="open = false">
-			<a class="menu-link" href="about.html" x-on:click="open = false; console.log('Clicked About Me')"> About Me </a>
-			<a class="menu-link" href="blog.html" x-on:click="open = false"> Blog </a>
+			<a class="menu-link" href="/about" x-on:click="open = false; console.log('Clicked About Me')"> About Me </a>
+			<a class="menu-link" href="/blog" x-on:click="open = false"> Blog </a>
 		</div>
 		<slot/>
 		
